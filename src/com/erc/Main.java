@@ -18,12 +18,17 @@ public class Main {
             e.printStackTrace();
         }
 
+
         Arrays.stream(words.split("\n"))
                 .map(l -> l.split(" "))
-                .flatMap(w -> Arrays.stream(w))
+                .flatMap(Arrays::stream)
+                .map(String::toLowerCase)
                 .collect(Collectors.groupingBy(String::toString))
-                .forEach((k, v) -> {
-                    System.out.printf("%s %d%n", k, v.size());
+                .values().stream()
+                .sorted((value1, value2) -> value2.size() - value1.size())
+                .forEach((v) -> {
+                    System.out.printf("%s %d%n", v.get(0), v.size());
                 });
+        ;
     }
 }
